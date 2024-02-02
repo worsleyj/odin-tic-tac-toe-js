@@ -4,11 +4,13 @@ const player2 = createPlayer("player2", "o");
 const ticTacToe = (function () {
     let turns = 0;
     let winner = 0;
-    let currPlayer = "none";
+    let currPlayer = player1;
 
+    function getCurrentPlayer() {
+        return currPlayer;
+    }
     function beginGame() {
         while(turns < 9) {
-            nextPlayer();
             gameBoard.makeMove(currPlayer);
             checkWinner();
             // console.log(winner);
@@ -19,8 +21,10 @@ const ticTacToe = (function () {
     }
     function nextPlayer() {
         if (currPlayer == player1) {
+            console.log("Current player: " + currPlayer.name)
             currPlayer = player2;
         } else {
+            console.log("Current player: " + currPlayer.name)
             currPlayer = player1;
         }
     }
@@ -48,7 +52,7 @@ const ticTacToe = (function () {
             turns = 999;
         }
     }
-    return { currPlayer, beginGame, checkWinner};
+    return { getCurrentPlayer, nextPlayer, currPlayer, beginGame, checkWinner};
 })();
 
 const gameBoard = (function () {
@@ -76,6 +80,9 @@ const gameBoard = (function () {
         // check if space is already taken and if inputs are valid
         if (validInput(column, row) && validSpace(column, row)) {
             board[row][column] = player.getMark();
+            ticTacToe.nextPlayer();
+            ticTacToe.checkWinner();
+            console.log(ticTacToe.getCurrentPlayer())
         } else {
             // makeMove(player);
         }
@@ -113,57 +120,56 @@ const viewController = (function () {
     const resetBtn = document.querySelector("#reset-button");
 
     oneOne.addEventListener('click', () => {
-        gameBoard.makeMove(0, 0, player1);
+        gameBoard.makeMove(0, 0, ticTacToe.getCurrentPlayer());
         oneOne.textContent = gameBoard.board[0][0];
     })
     oneTwo.addEventListener('click', () => {
-        gameBoard.makeMove(0, 1, player1);
+        gameBoard.makeMove(0, 1, ticTacToe.getCurrentPlayer());
         oneTwo.textContent = gameBoard.board[1][0];
     })
     oneThree.addEventListener('click', () => {
-        gameBoard.makeMove(0, 2, player1);
+        gameBoard.makeMove(0, 2, ticTacToe.getCurrentPlayer());
         oneThree.textContent = gameBoard.board[2][0];
     })
     twoOne.addEventListener('click', () => {
-        gameBoard.makeMove(1, 0, player1);
+        gameBoard.makeMove(1, 0, ticTacToe.getCurrentPlayer());
         twoOne.textContent = gameBoard.board[0][1];
     })
     twoTwo.addEventListener('click', () => {
-        gameBoard.makeMove(1, 1, player1);
+        gameBoard.makeMove(1, 1, ticTacToe.getCurrentPlayer());
         twoTwo.textContent = gameBoard.board[1][1];
     })
     twoThree.addEventListener('click', () => {
-        gameBoard.makeMove(1, 2, player1);
+        gameBoard.makeMove(1, 2, ticTacToe.getCurrentPlayer());
         twoThree.textContent = gameBoard.board[2][1];
     })
     threeOne.addEventListener('click', () => {
-        gameBoard.makeMove(2, 0, player1);
+        gameBoard.makeMove(2, 0, ticTacToe.getCurrentPlayer());
         threeOne.textContent = gameBoard.board[0][2];
     })
     threeTwo.addEventListener('click', () => {
-        gameBoard.makeMove(2, 1, player1);
+        gameBoard.makeMove(2, 1, ticTacToe.getCurrentPlayer());
         threeTwo.textContent = gameBoard.board[1][2];
     })
     threeThree.addEventListener('click', () => {
-        gameBoard.makeMove(2, 2, player1);
+        gameBoard.makeMove(2, 2, ticTacToe.getCurrentPlayer());
         threeThree.textContent = gameBoard.board[2][2];
     })
-
     resetBtn.addEventListener('click', () => {
         gameBoard.resetBoard();
         resetDisplay();
     })
 
     function resetDisplay() {
-        oneOne.textContent = "_"
-        oneTwo.textContent = "_"
-        oneThree.textContent = "_"
-        twoOne.textContent = "_"
-        twoTwo.textContent = "_"
-        twoThree.textContent = "_"
-        threeOne.textContent = "_"
-        threeTwo.textContent = "_"
-        threeThree.textContent = "_"
+        oneOne.textContent = "_";
+        oneTwo.textContent = "_";
+        oneThree.textContent = "_";
+        twoOne.textContent = "_";
+        twoTwo.textContent = "_";
+        twoThree.textContent = "_";
+        threeOne.textContent = "_";
+        threeTwo.textContent = "_";
+        threeThree.textContent = "_";
     }
     return { resetDisplay }
 })();
