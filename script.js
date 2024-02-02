@@ -92,6 +92,35 @@ const gameBoard = (function () {
     return { board, displayBoard, makeMove };
 })()
 
+// const but1 = document.querySelector("#button-one");
+// but1.textContent = "12"
+
+const viewController = (function () {
+    const oneOne = document.querySelector("#one-one");
+    const oneTwo = document.querySelector("#one-two");
+    const oneThree = document.querySelector("#one-three");
+    const twoOne = document.querySelector("#two-one");
+    const twoTwo = document.querySelector("#two-two");
+    const twoThree = document.querySelector("#two-three");
+    const threeOne = document.querySelector("#three-one");
+    const threeTwo = document.querySelector("#three-two");
+    const threeThree = document.querySelector("#three-three");
+
+    function updateDisplay() {
+        oneOne.textContent = gameBoard.board[0][0]
+        oneTwo.textContent = gameBoard.board[1][0]
+        oneThree.textContent = gameBoard.board[2][0]
+        twoOne.textContent = gameBoard.board[0][1]
+        twoTwo.textContent = gameBoard.board[1][1]
+        twoThree.textContent = gameBoard.board[2][1]
+        threeOne.textContent = gameBoard.board[0][2]
+        threeTwo.textContent = gameBoard.board[1][2]
+        threeThree.textContent = gameBoard.board[2][2]
+    }
+
+    return { updateDisplay }
+})();
+
 function createPlayer (name, mark) {
     let score = 0;
 
@@ -102,4 +131,5 @@ function createPlayer (name, mark) {
     return { name, getMark, getScore, increaseScore };
 }
 
+viewController.updateDisplay();
 // ticTacToe.beginGame();
