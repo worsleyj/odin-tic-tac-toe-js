@@ -48,7 +48,7 @@ const ticTacToe = (function () {
             turns = 999;
         }
     }
-    return { beginGame, checkWinner};
+    return { currPlayer, beginGame, checkWinner};
 })();
 
 const gameBoard = (function () {
@@ -63,14 +63,14 @@ const gameBoard = (function () {
         console.log(board[1]);
         console.log(board[2]);
     }
-    function makeMove(player) {
-        column = prompt(player.name + " Enter column number: ")
-        row = prompt(player.name + " Enter row number: ")
+    function makeMove(column, row, player) {
+        // column = prompt(player.name + " Enter column number: ")
+        // row = prompt(player.name + " Enter row number: ")
         // check if space is already taken and if inputs are valid
         if (validInput(column, row) && validSpace(column, row)) {
             board[row][column] = player.getMark();
         } else {
-            makeMove(player);
+            // makeMove(player);
         }
     }
     function validInput(column, row) {
@@ -85,8 +85,8 @@ const gameBoard = (function () {
         if ((board[column][row] != "x" && board[column][row] != "o")) {
             return true;
         } else {
-            alert("Space already taken! Try another space.");
-            return false;
+            // alert("Space already taken! Try another space.");
+            return true;
         }
     }
     return { board, displayBoard, makeMove };
@@ -106,6 +106,43 @@ const viewController = (function () {
     const threeTwo = document.querySelector("#three-two");
     const threeThree = document.querySelector("#three-three");
 
+    oneOne.addEventListener('click', () => {
+        gameBoard.makeMove(0, 0, player1);
+        updateDisplay();
+    })
+    oneTwo.addEventListener('click', () => {
+        gameBoard.makeMove(0, 1, player1);
+        updateDisplay();
+    })
+    oneThree.addEventListener('click', () => {
+        gameBoard.makeMove(0, 2, player1);
+        updateDisplay();
+    })
+    twoOne.addEventListener('click', () => {
+        gameBoard.makeMove(1, 0, player1);
+        updateDisplay();
+    })
+    twoTwo.addEventListener('click', () => {
+        gameBoard.makeMove(1, 1, player1);
+        updateDisplay();
+    })
+    twoThree.addEventListener('click', () => {
+        gameBoard.makeMove(1, 2, player1);
+        updateDisplay();
+    })
+    threeOne.addEventListener('click', () => {
+        gameBoard.makeMove(2, 0, player1);
+        updateDisplay();
+    })
+    threeTwo.addEventListener('click', () => {
+        gameBoard.makeMove(2, 1, player1);
+        updateDisplay();
+    })
+    threeThree.addEventListener('click', () => {
+        gameBoard.makeMove(2, 2, player1);
+        updateDisplay();
+    })
+    
     function updateDisplay() {
         oneOne.textContent = gameBoard.board[0][0]
         oneTwo.textContent = gameBoard.board[1][0]
@@ -116,8 +153,8 @@ const viewController = (function () {
         threeOne.textContent = gameBoard.board[0][2]
         threeTwo.textContent = gameBoard.board[1][2]
         threeThree.textContent = gameBoard.board[2][2]
+        gameBoard.displayBoard();
     }
-
     return { updateDisplay }
 })();
 
