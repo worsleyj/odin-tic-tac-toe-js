@@ -14,6 +14,9 @@
     background-color: lightskyblue;
  }
 
+ .row > button:active {
+    background-color: greenyellow;
+ }
  .board {
     margin-top: 100px;
     grid-column: 2 / 3;

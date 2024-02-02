@@ -92,9 +92,6 @@ const gameBoard = (function () {
     return { board, displayBoard, makeMove };
 })()
 
-// const but1 = document.querySelector("#button-one");
-// but1.textContent = "12"
-
 const viewController = (function () {
     const oneOne = document.querySelector("#one-one");
     const oneTwo = document.querySelector("#one-two");
@@ -108,54 +105,41 @@ const viewController = (function () {
 
     oneOne.addEventListener('click', () => {
         gameBoard.makeMove(0, 0, player1);
-        updateDisplay();
+        oneOne.textContent = gameBoard.board[0][0];
     })
     oneTwo.addEventListener('click', () => {
         gameBoard.makeMove(0, 1, player1);
-        updateDisplay();
+        oneTwo.textContent = gameBoard.board[1][0];
     })
     oneThree.addEventListener('click', () => {
         gameBoard.makeMove(0, 2, player1);
-        updateDisplay();
+        oneThree.textContent = gameBoard.board[2][0];
     })
     twoOne.addEventListener('click', () => {
         gameBoard.makeMove(1, 0, player1);
-        updateDisplay();
+        twoOne.textContent = gameBoard.board[0][1];
     })
     twoTwo.addEventListener('click', () => {
         gameBoard.makeMove(1, 1, player1);
-        updateDisplay();
+        twoTwo.textContent = gameBoard.board[1][1];
     })
     twoThree.addEventListener('click', () => {
         gameBoard.makeMove(1, 2, player1);
-        updateDisplay();
+        twoThree.textContent = gameBoard.board[2][1];
     })
     threeOne.addEventListener('click', () => {
         gameBoard.makeMove(2, 0, player1);
-        updateDisplay();
+        threeOne.textContent = gameBoard.board[0][2];
     })
     threeTwo.addEventListener('click', () => {
         gameBoard.makeMove(2, 1, player1);
-        updateDisplay();
+        threeTwo.textContent = gameBoard.board[1][2];
     })
     threeThree.addEventListener('click', () => {
         gameBoard.makeMove(2, 2, player1);
-        updateDisplay();
+        threeThree.textContent = gameBoard.board[2][2];
     })
-    
-    function updateDisplay() {
-        oneOne.textContent = gameBoard.board[0][0]
-        oneTwo.textContent = gameBoard.board[1][0]
-        oneThree.textContent = gameBoard.board[2][0]
-        twoOne.textContent = gameBoard.board[0][1]
-        twoTwo.textContent = gameBoard.board[1][1]
-        twoThree.textContent = gameBoard.board[2][1]
-        threeOne.textContent = gameBoard.board[0][2]
-        threeTwo.textContent = gameBoard.board[1][2]
-        threeThree.textContent = gameBoard.board[2][2]
-        gameBoard.displayBoard();
-    }
-    return { updateDisplay }
+    return { }
 })();
 
 function createPlayer (name, mark) {
