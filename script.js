@@ -102,4 +102,4 @@ function createPlayer (name, mark) {
     return { name, getMark, getScore, increaseScore };
 }
 
-ticTacToe.beginGame();
+// ticTacToe.beginGame();
