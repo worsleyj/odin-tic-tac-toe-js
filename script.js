@@ -2,6 +2,7 @@ const player1 = createPlayer("player1", "x");
 const player2 = createPlayer("player2", "o");
 
 const ticTacToe = (function () {
+    const messages = document.querySelector("#messages")
     let turns = 0;
     let winner = 0;
     let currPlayer = player1;
@@ -31,16 +32,16 @@ const ticTacToe = (function () {
     function checkWinner() {
         // check rows then columns for winners
         for (let x = 0; x < 3; x++) {
-            if (gameBoard.board[x][0] == gameBoard.board[x][1] && gameBoard.board[x][1] == gameBoard.board[x][2]) {
+            if (gameBoard.board[x][0] == gameBoard.board[x][1] && gameBoard.board[x][1] == gameBoard.board[x][2] && gameBoard.board[x][0] != "_") {
                 winner = currPlayer.name;
-            } else if (gameBoard.board[0][x] == gameBoard.board[1][x] && gameBoard.board[1][x] == gameBoard.board[2][x]) {
+            } else if (gameBoard.board[0][x] == gameBoard.board[1][x] && gameBoard.board[1][x] == gameBoard.board[2][x] && gameBoard.board[0][x] != "_") {
                 winner = currPlayer.name;
             }
         }
         // check diagonals
-        if (gameBoard.board[0][0] == gameBoard.board[1][1] && gameBoard.board[1][1] == gameBoard.board[2][2]) {
+        if (gameBoard.board[0][0] == gameBoard.board[1][1] && gameBoard.board[1][1] == gameBoard.board[2][2] && gameBoard.board[0][0] != "_") {
             winner = currPlayer.name;
-        } else if (gameBoard.board[0][2] == gameBoard.board[1][1] && gameBoard.board[1][1] == gameBoard.board[2][0]) {
+        } else if (gameBoard.board[0][2] == gameBoard.board[1][1] && gameBoard.board[1][1] == gameBoard.board[2][0] && gameBoard.board[2][0] != "_") {
             winner = currPlayer.name;
         }
         // if game has run out of empty spaces, declare a tie
@@ -50,6 +51,8 @@ const ticTacToe = (function () {
         // if winner, end the game
         if (winner != 0) {
             turns = 999;
+            messages.textContent = "You won!"
+            viewController.resetDisplay()
         }
     }
     return { getCurrentPlayer, nextPlayer, currPlayer, beginGame, checkWinner};
@@ -82,7 +85,7 @@ const gameBoard = (function () {
             board[row][column] = player.getMark();
             ticTacToe.nextPlayer();
             ticTacToe.checkWinner();
-            console.log(ticTacToe.getCurrentPlayer())
+            // console.log(ticTacToe.getCurrentPlayer())
         } else {
             // makeMove(player);
         }
