@@ -2,16 +2,18 @@ const player1 = createPlayer("player1", "x");
 const player2 = createPlayer("player2", "o");
 
 const ticTacToe = (function () {
-    let turns = 1;
+    let turns = 0;
     let winner = 0;
-    let currPlayer = player1;
+    let currPlayer = "none";
 
     function beginGame() {
         while(turns < 9) {
             nextPlayer();
             gameBoard.makeMove(currPlayer);
             checkWinner();
-            console.log(winner);
+            // console.log(winner);
+            // console.log(turns)
+            gameBoard.displayBoard();
             turns++;
         }
     }
@@ -37,9 +39,13 @@ const ticTacToe = (function () {
         } else if (gameBoard.board[0][2] == gameBoard.board[1][1] && gameBoard.board[1][1] == gameBoard.board[2][0]) {
             winner = currPlayer.name;
         }
+        // if game has run out of empty spaces, declare a tie
+        if (turns == 9) {
+            console.log("No winners! Refresh the page to try again.")
+        }
         // if winner, end the game
         if (winner != 0) {
-            turns = 9;
+            turns = 999;
         }
     }
     return { beginGame, checkWinner};
@@ -62,7 +68,7 @@ const gameBoard = (function () {
         row = prompt(player.name + " Enter row number: ")
         // check if space is already taken and if inputs are valid
         if (validInput(column, row) && validSpace(column, row)) {
-            board[column][row] = player.getMark();
+            board[row][column] = player.getMark();
         } else {
             makeMove(player);
         }
@@ -97,4 +103,3 @@ function createPlayer (name, mark) {
 }
 
 ticTacToe.beginGame();
-gameBoard.displayBoard();
