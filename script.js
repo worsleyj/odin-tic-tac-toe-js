@@ -63,6 +63,13 @@ const gameBoard = (function () {
         console.log(board[1]);
         console.log(board[2]);
     }
+    function resetBoard() {
+        board = [
+            ["_", "_", "_"],
+            ["_", "_", "_"],
+            ["_", "_", "_"]
+        ]
+    }
     function makeMove(column, row, player) {
         // column = prompt(player.name + " Enter column number: ")
         // row = prompt(player.name + " Enter row number: ")
@@ -89,7 +96,7 @@ const gameBoard = (function () {
             return true;
         }
     }
-    return { board, displayBoard, makeMove };
+    return { board, displayBoard, resetBoard, makeMove };
 })()
 
 const viewController = (function () {
@@ -102,6 +109,8 @@ const viewController = (function () {
     const threeOne = document.querySelector("#three-one");
     const threeTwo = document.querySelector("#three-two");
     const threeThree = document.querySelector("#three-three");
+
+    const resetBtn = document.querySelector("#reset-button");
 
     oneOne.addEventListener('click', () => {
         gameBoard.makeMove(0, 0, player1);
@@ -139,7 +148,24 @@ const viewController = (function () {
         gameBoard.makeMove(2, 2, player1);
         threeThree.textContent = gameBoard.board[2][2];
     })
-    return { }
+
+    resetBtn.addEventListener('click', () => {
+        gameBoard.resetBoard();
+        resetDisplay();
+    })
+
+    function resetDisplay() {
+        oneOne.textContent = "_"
+        oneTwo.textContent = "_"
+        oneThree.textContent = "_"
+        twoOne.textContent = "_"
+        twoTwo.textContent = "_"
+        twoThree.textContent = "_"
+        threeOne.textContent = "_"
+        threeTwo.textContent = "_"
+        threeThree.textContent = "_"
+    }
+    return { resetDisplay }
 })();
 
 function createPlayer (name, mark) {
@@ -152,5 +178,4 @@ function createPlayer (name, mark) {
     return { name, getMark, getScore, increaseScore };
 }
 
-viewController.updateDisplay();
 // ticTacToe.beginGame();
