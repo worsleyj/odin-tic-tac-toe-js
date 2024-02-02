@@ -21,10 +21,10 @@ const ticTacToe = (function () {
     }
     function nextPlayer() {
         if (currPlayer == player1) {
-            console.log("Current player: " + currPlayer.name)
+            // console.log("Current player: " + currPlayer.name)
             currPlayer = player2;
         } else {
-            console.log("Current player: " + currPlayer.name)
+            // console.log("Current player: " + currPlayer.name)
             currPlayer = player1;
         }
     }
@@ -78,21 +78,13 @@ const gameBoard = (function () {
         // column = prompt(player.name + " Enter column number: ")
         // row = prompt(player.name + " Enter row number: ")
         // check if space is already taken and if inputs are valid
-        if (validInput(column, row) && validSpace(column, row)) {
+        if (validSpace(column, row)) {
             board[row][column] = player.getMark();
             ticTacToe.nextPlayer();
             ticTacToe.checkWinner();
             console.log(ticTacToe.getCurrentPlayer())
         } else {
             // makeMove(player);
-        }
-    }
-    function validInput(column, row) {
-        if (column > -1 && column < 3 && row > -1 && row < 3) {
-            return true;
-        } else {
-            alert("Inputs are not valid! Enter numbers between 0-2");
-            return false;
         }
     }
     function validSpace(column, row) {
