@@ -2,28 +2,47 @@ const player1 = createPlayer("player1", "x");
 const player2 = createPlayer("player2", "o");
 
 const ticTacToe = (function () {
-    function beginGame() {
+    let turns = 1;
+    let winner = 0;
+    let currPlayer = player1;
 
+    function beginGame() {
+        while(turns < 9) {
+            nextPlayer();
+            gameBoard.makeMove(currPlayer);
+            checkWinner();
+            console.log(winner);
+            turns++;
+        }
+    }
+    function nextPlayer() {
+        if (currPlayer == player1) {
+            currPlayer = player2;
+        } else {
+            currPlayer = player1;
+        }
     }
     function checkWinner() {
         // check rows then columns for winners
         for (let x = 0; x < 3; x++) {
             if (gameBoard.board[x][0] == gameBoard.board[x][1] && gameBoard.board[x][1] == gameBoard.board[x][2]) {
-                return x + " Winner! ";
+                winner = currPlayer.name;
             } else if (gameBoard.board[0][x] == gameBoard.board[1][x] && gameBoard.board[1][x] == gameBoard.board[2][x]) {
-                return " Winner! " + x;
+                winner = currPlayer.name;
             }
         }
         // check diagonals
         if (gameBoard.board[0][0] == gameBoard.board[1][1] && gameBoard.board[1][1] == gameBoard.board[2][2]) {
-            return " Winner! ";
+            winner = currPlayer.name;
         } else if (gameBoard.board[0][2] == gameBoard.board[1][1] && gameBoard.board[1][1] == gameBoard.board[2][0]) {
-            return " Winner! ";
+            winner = currPlayer.name;
         }
-        // if board is full and there are no winners, declare a tie
-
+        // if winner, end the game
+        if (winner != 0) {
+            turns = 9;
+        }
     }
-    return {checkWinner};
+    return { beginGame, checkWinner};
 })();
 
 const gameBoard = (function () {
@@ -39,13 +58,29 @@ const gameBoard = (function () {
         console.log(board[2]);
     }
     function makeMove(player) {
-        column = prompt("Enter column number: ")
-        row = prompt("Enter row number: ")
-        if (board[column][row] != player.getMark()) {
+        column = prompt(player.name + " Enter column number: ")
+        row = prompt(player.name + " Enter row number: ")
+        // check if space is already taken and if inputs are valid
+        if (validInput(column, row) && validSpace(column, row)) {
             board[column][row] = player.getMark();
         } else {
-            alert("Space already taken! Try another space.");
             makeMove(player);
+        }
+    }
+    function validInput(column, row) {
+        if (column > -1 && column < 3 && row > -1 && row < 3) {
+            return true;
+        } else {
+            alert("Inputs are not valid! Enter numbers between 0-2");
+            return false;
+        }
+    }
+    function validSpace(column, row) {
+        if ((board[column][row] != "x" && board[column][row] != "o")) {
+            return true;
+        } else {
+            alert("Space already taken! Try another space.");
+            return false;
         }
     }
     return { board, displayBoard, makeMove };
@@ -61,9 +96,5 @@ function createPlayer (name, mark) {
     return { name, getMark, getScore, increaseScore };
 }
 
-gameBoard.makeMove(player1)
-gameBoard.makeMove(player1)
-console.log(ticTacToe.checkWinner());
+ticTacToe.beginGame();
 gameBoard.displayBoard();
-player2.increaseScore();
-console.log(player2.name)
