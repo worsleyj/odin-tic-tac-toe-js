@@ -20,6 +20,8 @@ const ticTacToe = (function () {
         } else if (gameBoard.board[0][2] == gameBoard.board[1][1] && gameBoard.board[1][1] == gameBoard.board[2][0]) {
             return " Winner! ";
         }
+        // if board is full and there are no winners, declare a tie
+
     }
     return {checkWinner};
 })();
@@ -36,8 +38,15 @@ const gameBoard = (function () {
         console.log(board[1]);
         console.log(board[2]);
     }
-    function makeMove(column, row, player) {
-        board[column][row] = player.getMark();
+    function makeMove(player) {
+        column = prompt("Enter column number: ")
+        row = prompt("Enter row number: ")
+        if (board[column][row] != player.getMark()) {
+            board[column][row] = player.getMark();
+        } else {
+            alert("Space already taken! Try another space.");
+            makeMove(player);
+        }
     }
     return { board, displayBoard, makeMove };
 })()
@@ -52,9 +61,8 @@ function createPlayer (name, mark) {
     return { name, getMark, getScore, increaseScore };
 }
 
-gameBoard.makeMove(0, 0, player1)
-gameBoard.makeMove(1, 0, player1)
-gameBoard.makeMove(2, 0, player1)
+gameBoard.makeMove(player1)
+gameBoard.makeMove(player1)
 console.log(ticTacToe.checkWinner());
 gameBoard.displayBoard();
 player2.increaseScore();
