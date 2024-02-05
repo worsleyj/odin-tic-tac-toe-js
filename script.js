@@ -21,7 +21,6 @@ const ticTacToe = (function () {
         return currPlayer;
     }
     function nextPlayer() {
-        console.log(player1.getName() + "   " + player2.getName())
         turns++;
         if (currPlayer == player1) {
             currPlayer = player2;
@@ -49,22 +48,23 @@ const ticTacToe = (function () {
         if (turns == 9) {
             gameBoard.resetBoard();
             viewController.resetDisplay();
-            messages.style.color = "black"
-            messages.textContent = "The board is full! The game is a draw."
+            messages.style.color = "black";
+            messages.textContent = "The board is full! The game is a draw.";
         }
         // if winner, reset for the next game and add 1 to the score
         if (winner != 0) {
+            console.log(winner)
             nextPlayer();
             alert(currPlayer.getName() + " won!");
-            gameBoard.resetBoard();
-            viewController.resetDisplay();
             messages.style.color = "green";
             messages.textContent = currPlayer.getName() + " won!";
             currPlayer.increaseScore();
             viewController.updateScore();
-            console.log(currPlayer.getScore())
+            console.log(currPlayer.getName() + " " + currPlayer.getScore())
             winner = 0;
             turns = 0;
+            gameBoard.resetBoard();
+            viewController.resetDisplay();
         }
     }
     return { messages, displayCurrentPlayer, setCurrentPlayer, getCurrentPlayer, nextPlayer, currPlayer, checkWinner};
