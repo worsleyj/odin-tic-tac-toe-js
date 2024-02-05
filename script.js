@@ -47,12 +47,17 @@ const ticTacToe = (function () {
         }
         // if game has run out of empty spaces, declare a tie
         if (turns == 9) {
+            gameBoard.resetBoard();
+            viewController.resetDisplay();
             messages.style.color = "black"
             messages.textContent = "The board is full! The game is a draw."
         }
         // if winner, reset for the next game and add 1 to the score
         if (winner != 0) {
             nextPlayer();
+            alert(currPlayer.getName() + " won!");
+            gameBoard.resetBoard();
+            viewController.resetDisplay();
             messages.style.color = "green";
             messages.textContent = currPlayer.getName() + " won!";
             currPlayer.increaseScore();
