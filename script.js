@@ -1,5 +1,5 @@
-const player1 = createPlayer("player1", "x");
-const player2 = createPlayer("player2", "o");
+const player1 = createPlayer("Player 1", "x");
+const player2 = createPlayer("Player 2", "o");
 
 const ticTacToe = (function () {
     const messages = document.querySelector("#messages");
@@ -11,7 +11,7 @@ const ticTacToe = (function () {
     displayCurrentPlayer();
 
     function displayCurrentPlayer() {
-        currentPlayer.textContent = "Current Player: " + currPlayer.name + " - " + currPlayer.getMark(); 
+        currentPlayer.textContent = "Current Player: " + currPlayer.getName() + " - " + currPlayer.getMark(); 
     }
     function setCurrentPlayer(player) {
         currPlayer = player;
@@ -21,6 +21,7 @@ const ticTacToe = (function () {
         return currPlayer;
     }
     function nextPlayer() {
+        console.log(player1.getName() + "   " + player2.getName())
         turns++;
         if (currPlayer == player1) {
             currPlayer = player2;
@@ -51,14 +52,14 @@ const ticTacToe = (function () {
         }
         // if winner, end the game
         if (winner != 0) {
-            console.log("winner is " + winner)
+            nextPlayer();
             messages.style.color = "green";
-            messages.textContent = winner + " won!";
+            messages.textContent = currPlayer.getName() + " won!";
             winner = 0;
             turns = 0;
         }
     }
-    return { messages, setCurrentPlayer, getCurrentPlayer, nextPlayer, currPlayer, checkWinner};
+    return { messages, displayCurrentPlayer, setCurrentPlayer, getCurrentPlayer, nextPlayer, currPlayer, checkWinner};
 })();
 
 const gameBoard = (function () {
@@ -106,7 +107,7 @@ const gameBoard = (function () {
             return false;
         }
     }
-    return { board, accessBoard, displayBoard, resetBoard, makeMove };
+    return { accessBoard, displayBoard, resetBoard, makeMove };
 })()
 
 const viewController = (function () {
@@ -121,6 +122,9 @@ const viewController = (function () {
     const threeThree = document.querySelector("#three-three");
 
     const resetBtn = document.querySelector("#reset-button");
+
+    const nameChange = document.querySelector(".change-names")
+    const nameReset = document.querySelector(".reset-names")
 
     oneOne.addEventListener('click', () => {
         gameBoard.makeMove(0, 0, ticTacToe.getCurrentPlayer());
@@ -157,7 +161,6 @@ const viewController = (function () {
     threeThree.addEventListener('click', () => {
         gameBoard.makeMove(2, 2, ticTacToe.getCurrentPlayer());
         threeThree.textContent = gameBoard.accessBoard(2, 2);
-        console.log(gameBoard.board[2][2])
     })
     resetBtn.addEventListener('click', () => {
         ticTacToe.messages.style.color = "black";
@@ -165,7 +168,23 @@ const viewController = (function () {
         gameBoard.resetBoard();
         resetDisplay();
     })
-
+    nameChange.addEventListener('click', () => {
+        event.preventDefault();
+        const nameOne = document.querySelector('#player1-name').value;
+        const nameTwo = document.querySelector('#player2-name').value;
+        if (nameOne != "") {
+            player1.setName(nameOne);
+        }
+        if (nameTwo != "") {
+            player2.setName(nameTwo);
+        }
+        ticTacToe.displayCurrentPlayer();
+    })
+    nameReset.addEventListener('click', () => {
+        player1.setName("Player 1");
+        player2.setName("Player 2");
+        ticTacToe.displayCurrentPlayer();
+    })
     function resetDisplay() {
         oneOne.textContent = "_";
         oneTwo.textContent = "_";
@@ -183,9 +202,11 @@ const viewController = (function () {
 function createPlayer (name, mark) {
     let score = 0;
 
+    const setName = newName => name = newName;
+    const getName = () => name;
     const getMark = () => mark;
     const getScore = () => score;
     const increaseScore = () => score++;
 
-    return { name, getMark, getScore, increaseScore };
+    return { name, getName, setName, getMark, getScore, increaseScore };
 }

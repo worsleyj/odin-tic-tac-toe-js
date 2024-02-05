@@ -30,3 +30,11 @@
  h1 {
     grid-column: 2 / 3;
  }
+
+ .player-names-buttons {
+    display: grid;
+ }
+
+ .player-names-buttons > button {
+    width: 125px;
+ }
