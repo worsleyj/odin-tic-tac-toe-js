@@ -50,19 +50,22 @@ const ticTacToe = (function () {
         }
         // if winner, end the game
         if (winner != 0) {
+            winner = 0;
             turns = 999;
-            messages.textContent = "You won!"
-            viewController.resetDisplay()
+            messages.textContent = "You won!";
+            console.log(winner);
+            // gameBoard.resetBoard();
+            // viewController.resetDisplay();
         }
     }
-    return { getCurrentPlayer, nextPlayer, currPlayer, beginGame, checkWinner};
+    return { messages, getCurrentPlayer, nextPlayer, currPlayer, beginGame, checkWinner};
 })();
 
 const gameBoard = (function () {
     let board = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9]
+        ["_", "_", "_"],
+        ["_", "_", "_"],
+        ["_", "_", "_"]
     ]
     function displayBoard() {
         console.log("Current Board: ");
@@ -71,6 +74,8 @@ const gameBoard = (function () {
         console.log(board[2]);
     }
     function resetBoard() {
+        // console.log("board reset")
+        ticTacToe.messages.textContent = "";
         board = [
             ["_", "_", "_"],
             ["_", "_", "_"],
@@ -85,6 +90,7 @@ const gameBoard = (function () {
             board[row][column] = player.getMark();
             ticTacToe.nextPlayer();
             ticTacToe.checkWinner();
+            displayBoard();
             // console.log(ticTacToe.getCurrentPlayer())
         } else {
             // makeMove(player);
