@@ -10,22 +10,11 @@ const ticTacToe = (function () {
     function getCurrentPlayer() {
         return currPlayer;
     }
-    function beginGame() {
-        while(turns < 9) {
-            gameBoard.makeMove(currPlayer);
-            checkWinner();
-            // console.log(winner);
-            // console.log(turns)
-            gameBoard.displayBoard();
-            turns++;
-        }
-    }
     function nextPlayer() {
+        turns++;
         if (currPlayer == player1) {
-            // console.log("Current player: " + currPlayer.name)
             currPlayer = player2;
         } else {
-            // console.log("Current player: " + currPlayer.name)
             currPlayer = player1;
         }
     }
@@ -46,19 +35,17 @@ const ticTacToe = (function () {
         }
         // if game has run out of empty spaces, declare a tie
         if (turns == 9) {
-            console.log("No winners! Refresh the page to try again.")
+            messages.style.color = "black"
+            messages.textContent = "The board is full! The game is a draw."
         }
         // if winner, end the game
         if (winner != 0) {
-            winner = 0;
-            turns = 999;
+            messages.style.color = "green";
             messages.textContent = "You won!";
             console.log(winner);
-            // gameBoard.resetBoard();
-            // viewController.resetDisplay();
         }
     }
-    return { messages, getCurrentPlayer, nextPlayer, currPlayer, beginGame, checkWinner};
+    return { turns, messages, getCurrentPlayer, nextPlayer, currPlayer, checkWinner};
 })();
 
 const gameBoard = (function () {
@@ -73,38 +60,28 @@ const gameBoard = (function () {
         console.log(board[1]);
         console.log(board[2]);
     }
-    function resetBoard() {
-        // console.log("board reset")
-        ticTacToe.messages.textContent = "";
-        board = [
-            ["_", "_", "_"],
-            ["_", "_", "_"],
-            ["_", "_", "_"]
-        ]
-    }
     function makeMove(column, row, player) {
         // column = prompt(player.name + " Enter column number: ")
         // row = prompt(player.name + " Enter row number: ")
-        // check if space is already taken and if inputs are valid
+        // check if space is already taken
+        ticTacToe.messages.textContent = "";
         if (validSpace(column, row)) {
             board[row][column] = player.getMark();
             ticTacToe.nextPlayer();
             ticTacToe.checkWinner();
             displayBoard();
-            // console.log(ticTacToe.getCurrentPlayer())
-        } else {
-            // makeMove(player);
         }
     }
     function validSpace(column, row) {
-        if ((board[column][row] != "x" && board[column][row] != "o")) {
+        if (board[row][column] == "_") {
             return true;
         } else {
-            // alert("Space already taken! Try another space.");
-            return true;
+            ticTacToe.messages.style.color = "red";
+            ticTacToe.messages.textContent = "Space already taken! Try another space.";
+            return false;
         }
     }
-    return { board, displayBoard, resetBoard, makeMove };
+    return { board, displayBoard, makeMove };
 })()
 
 const viewController = (function () {
@@ -157,22 +134,8 @@ const viewController = (function () {
         threeThree.textContent = gameBoard.board[2][2];
     })
     resetBtn.addEventListener('click', () => {
-        gameBoard.resetBoard();
-        resetDisplay();
+        location.reload()
     })
-
-    function resetDisplay() {
-        oneOne.textContent = "_";
-        oneTwo.textContent = "_";
-        oneThree.textContent = "_";
-        twoOne.textContent = "_";
-        twoTwo.textContent = "_";
-        twoThree.textContent = "_";
-        threeOne.textContent = "_";
-        threeTwo.textContent = "_";
-        threeThree.textContent = "_";
-    }
-    return { resetDisplay }
 })();
 
 function createPlayer (name, mark) {
@@ -184,5 +147,3 @@ function createPlayer (name, mark) {
 
     return { name, getMark, getScore, increaseScore };
 }
-
-// ticTacToe.beginGame();
