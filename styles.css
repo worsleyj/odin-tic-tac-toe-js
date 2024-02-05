@@ -1,40 +1,80 @@
+body {
+    background-color: aliceblue;
+}
+
 .container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     justify-items: center;
 }
 
 .message-container {
-    grid-column: 2 / 3;
+    grid-column: 1 / 2;
     grid-row: 1 / 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
- .row > button {
-    height: 100px;
-    width: 100px;
+.board {
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+    margin-top: 35px;
  }
 
- .row > button:hover {
-    background-color: lightskyblue;
- }
-
- .row > button:active {
-    background-color: greenyellow;
- }
- .board {
+.player-names {
     grid-row: 2 / 3;
     grid-column: 2 / 3;
- }
+}
 
- h1 {
-    grid-column: 2 / 3;
- }
+.player-scores {
+    grid-column: 3 / 4;
+}
 
- .player-names-buttons {
+.title {
+    font-size: 50px;
+    text-align: center;
+}
+
+#messages {
+    background-color: aliceblue;
+    font-size: 24px;
+    margin: 5px;
+}
+
+button {
+    height: 100px;
+    width: 100px;
+}
+
+button:hover {
+    background-color: lightskyblue;
+}
+
+button:active {
+    background-color: greenyellow;
+}
+
+.player-names-buttons {
     display: grid;
- }
+    justify-items: center;
+}
 
- .player-names-buttons > button {
-    width: 125px;
- }
+.player-names {
+    margin: 5px;
+}
+
+.player-names-buttons > button {
+    margin-top: 8px;
+    width: 200px;
+    height: 30px;
+}
+
+h2 {
+    text-align: center;
+}
+
+#reset-button {
+    height: 50px;
+}

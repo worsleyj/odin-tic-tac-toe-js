@@ -11,7 +11,7 @@ const ticTacToe = (function () {
     displayCurrentPlayer();
 
     function displayCurrentPlayer() {
-        currentPlayer.textContent = "Current Player: " + currPlayer.getName() + " - " + currPlayer.getMark(); 
+        currentPlayer.textContent = currPlayer.getName() + " - " + currPlayer.getMark(); 
     }
     function setCurrentPlayer(player) {
         currPlayer = player;
@@ -50,7 +50,7 @@ const ticTacToe = (function () {
             messages.style.color = "black"
             messages.textContent = "The board is full! The game is a draw."
         }
-        // if winner, end the game
+        // if winner, reset for the next game and add 1 to the score
         if (winner != 0) {
             nextPlayer();
             messages.style.color = "green";
