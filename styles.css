@@ -1,80 +1,29 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
 body {
-    background-color: aliceblue;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
 }
 
-.container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    justify-items: center;
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
 }
 
-.message-container {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+input, button, textarea, select {
+    font: inherit;
 }
 
-.board {
-    grid-row: 1 / 2;
-    grid-column: 2 / 3;
-    margin-top: 35px;
- }
-
-.player-names {
-    grid-row: 2 / 3;
-    grid-column: 2 / 3;
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
 }
 
-.player-scores {
-    grid-column: 3 / 4;
-}
-
-.title {
-    font-size: 50px;
-    text-align: center;
-}
-
-#messages {
-    background-color: aliceblue;
-    font-size: 24px;
-    margin: 5px;
-}
-
-button {
-    height: 100px;
-    width: 100px;
-}
-
-button:hover {
-    background-color: lightskyblue;
-}
-
-button:active {
-    background-color: greenyellow;
-}
-
-.player-names-buttons {
-    display: grid;
-    justify-items: center;
-}
-
-.player-names {
-    margin: 5px;
-}
-
-.player-names-buttons > button {
-    margin-top: 8px;
-    width: 200px;
-    height: 30px;
-}
-
-h2 {
-    text-align: center;
-}
-
-#reset-button {
-    height: 50px;
+#root, #__next {
+    isolation: isolate;
 }
