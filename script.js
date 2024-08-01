@@ -29,7 +29,6 @@ const Gameboard = (function() {
     }
     const checkWinner = () => {
         if (checkRows() || checkCols() || checkDiags()) {
-            console.log(TicTacToe.getCurrPlayerName() + " is the winner!");
             winner = TicTacToe.getCurrPlayerName();
         }
         return winner;
@@ -53,7 +52,7 @@ const TicTacToe = (function() {
     let currPlayer = "";
     
     const getCurrPlayerName = () => currPlayer.name;
-    const nextTurn = () => turnNumber++;
+    const nextTurn = () => turnNumber++; console.log(turnNumber);;
     const takeTurn = () => {
         if (turnNumber % 2 != 0) {
             currPlayer = playerOne;
@@ -62,13 +61,24 @@ const TicTacToe = (function() {
         }
         marker = currPlayer.marker;
         let playerChoice = prompt("Enter an index to place your marker. Current marker: " + marker);
-        Gameboard.board[playerChoice] = marker;
+
+        if (Gameboard.board[playerChoice] != "X" && Gameboard.board[playerChoice] != "O") {
+            Gameboard.board[playerChoice] = marker;
+        } else {
+            alert("That spot is already taken! Try again.")
+            TicTacToe.takeTurn();
+        }
+
         Gameboard.displayBoard();
-        Gameboard.checkWinner();
         nextTurn();
 
-        while (Gameboard.checkWinner() == "" || turnNumber < 7) {
+        while (Gameboard.checkWinner() == "" && turnNumber < 10) {
             TicTacToe.takeTurn();
+        }
+        if (Gameboard.checkWinner() != "") {
+            console.log(TicTacToe.getCurrPlayerName() + " is the winner!");
+        } else if (turnNumber == 10) {
+            console.log("Board is filled up! It's a draw!");
         }
     }
     return {turnNumber, getCurrPlayerName, takeTurn}
