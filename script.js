@@ -1,3 +1,11 @@
+let boardSpaces = document.querySelectorAll(".space");
+console.log(boardSpaces);
+boardSpaces.forEach((space) => space.addEventListener("click", () => {
+    console.log("Clicked space " + space.textContent);
+}))
+
+
+
 const Gameboard = (function() {
     let board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
     let winner = "";
