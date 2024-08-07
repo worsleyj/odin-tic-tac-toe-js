@@ -49,8 +49,8 @@ const Gameboard = (function() {
 function createPlayer(name, marker) {
     let score = 0;
     const addScore = () => score++;
-    const printScore = () => name + "'s score is: " + score;
-    return {name, marker, printScore, addScore}
+    const getScore = () => score;
+    return {name, marker, getScore, addScore}
 }
 
 const playerOne = createPlayer("Player One", "X");
@@ -62,6 +62,8 @@ const TicTacToe = (function() {
     let currPlayer = "";
     let playerChoice = "";
     let currMarker = document.querySelector(".current-marker");
+    let playerOneScore = document.querySelector(".player-one-score");
+    let playerTwoScore = document.querySelector(".player-two-score");
     let boardSpaces = document.querySelectorAll(".space");
     boardSpaces.forEach((space, index) => space.addEventListener("click", () => {
         playerChoice = index;
@@ -72,6 +74,10 @@ const TicTacToe = (function() {
     const resetGame = () => {
         turnNumber = 1;
         boardSpaces.forEach((space) => space.textContent = "");
+    }
+    const updateScores = () => {
+        playerOneScore.textContent = playerOne.getScore();
+        playerTwoScore.textContent = playerTwo.getScore();
     }
     const nextTurn = () => turnNumber++;
     const takeTurn = (index) => {
@@ -98,8 +104,8 @@ const TicTacToe = (function() {
 
         if (Gameboard.checkWinner() != "") {
             currPlayer.addScore();
+            updateScores();
             alert(Gameboard.checkWinner() + " is the winner!");
-            console.log(currPlayer.printScore());
             Gameboard.clearBoard();
             resetGame();
         } else if (turnNumber == 10) {
