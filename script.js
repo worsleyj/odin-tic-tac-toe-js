@@ -11,12 +11,6 @@ const Gameboard = (function() {
     const setBoardSpace = (playerChoice, marker) => {
         board[playerChoice] = marker;
     }
-    const displayBoard = () => {
-        console.log("Current Board: ");
-        console.log(board[0], board[1], board[2]);
-        console.log(board[3], board[4], board[5]);
-        console.log(board[6], board[7], board[8]);
-    }
     const checkRows = () => {
         if ((board[0] == board[1] && board[1] == board[2]) ||
             (board[3] == board[4] && board[4] == board[5]) ||
@@ -43,7 +37,7 @@ const Gameboard = (function() {
         }
         return winner;
     }
-    return {clearBoard, getBoardSpace, setBoardSpace, displayBoard, checkWinner};
+    return {clearBoard, getBoardSpace, setBoardSpace, checkWinner};
 })();
 
 function createPlayer(name, marker) {
