@@ -1,14 +1,16 @@
-let boardSpaces = document.querySelectorAll(".space");
-console.log(boardSpaces);
-boardSpaces.forEach((space) => space.addEventListener("click", () => {
-    console.log("Clicked space " + space.textContent);
-}))
-
-
-
 const Gameboard = (function() {
     let board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
     let winner = "";
+    const clearBoard = () => {
+        board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
+        winner = "";
+    }
+    const getBoardSpace = (playerChoice) => {
+        return board[playerChoice];
+    }
+    const setBoardSpace = (playerChoice, marker) => {
+        board[playerChoice] = marker;
+    }
     const displayBoard = () => {
         console.log("Current Board: ");
         console.log(board[0], board[1], board[2]);
@@ -41,7 +43,7 @@ const Gameboard = (function() {
         }
         return winner;
     }
-    return {board, displayBoard, checkWinner};
+    return {clearBoard, getBoardSpace, setBoardSpace, displayBoard, checkWinner};
 })();
 
 function createPlayer(name, marker) {
@@ -58,42 +60,49 @@ const TicTacToe = (function() {
     let turnNumber = 1;
     let marker = " ";
     let currPlayer = "";
+    let playerChoice = "";
+    let currMarker = document.querySelector(".current-marker");
+    let boardSpaces = document.querySelectorAll(".space");
+    boardSpaces.forEach((space) => space.addEventListener("click", () => {
+        playerChoice = space.textContent-1;
+        TicTacToe.takeTurn();
+        console.log("Clicked space " + space.textContent);
+    }))
     
     const getCurrPlayerName = () => currPlayer.name;
+    const resetTurns = () => turnNumber = 1;
     const nextTurn = () => turnNumber++;
     const takeTurn = () => {
+
         if (turnNumber % 2 != 0) {
             currPlayer = playerOne;
         } else {
             currPlayer = playerTwo;
         }
+        currMarker.textContent = marker;
         marker = currPlayer.marker;
-        // let playerChoice = prompt("Enter an index to place your marker. Current marker: " + marker);
-        let playerChoice = 0;
 
-        if (Gameboard.board[playerChoice] != "X" && Gameboard.board[playerChoice] != "O") {
-            Gameboard.board[playerChoice] = marker;
+
+        if (Gameboard.getBoardSpace(playerChoice) != "X" && Gameboard.getBoardSpace(playerChoice) != "O") {
+            Gameboard.setBoardSpace(playerChoice, marker);
+            // Gameboard.board[playerChoice] = marker;
+            nextTurn();
         } else {
-            alert("That spot is already taken! Try again.")
-            TicTacToe.takeTurn();
+            console.log("Taken");
         }
 
         Gameboard.displayBoard();
         if (Gameboard.checkWinner() != "") {
             currPlayer.addScore();
-            console.log(Gameboard.checkWinner() + " is the winner!");
+            alert(Gameboard.checkWinner() + " is the winner!");
             console.log(currPlayer.printScore());
-            console.log(turnNumber);
+            Gameboard.clearBoard();
+            resetTurns();
         } else if (turnNumber == 10) {
             console.log("Board is filled up! It's a draw!");
+            Gameboard.clearBoard();
+            resetTurns();
         }
-        while (Gameboard.checkWinner() == "" && turnNumber < 10) {
-            nextTurn();
-            TicTacToe.takeTurn();
-        }
-
     }
-    return {turnNumber, getCurrPlayerName, takeTurn}
+    return {getCurrPlayerName, takeTurn}
 })();
-
-// TicTacToe.takeTurn();
