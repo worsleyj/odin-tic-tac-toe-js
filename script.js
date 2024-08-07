@@ -63,17 +63,16 @@ const TicTacToe = (function() {
     let playerChoice = "";
     let currMarker = document.querySelector(".current-marker");
     let boardSpaces = document.querySelectorAll(".space");
-    boardSpaces.forEach((space) => space.addEventListener("click", () => {
-        playerChoice = space.textContent-1;
+    boardSpaces.forEach((space, index) => space.addEventListener("click", () => {
+        playerChoice = index;
         takeTurn();
-        console.log("Clicked space " + space.textContent);
+        console.log("Clicked space " + index);
     }))
     
     const getCurrPlayerName = () => currPlayer.name;
     const resetTurns = () => turnNumber = 1;
     const nextTurn = () => turnNumber++;
     const takeTurn = () => {
-
         if (turnNumber % 2 != 0) {
             currPlayer = playerOne;
         } else {
