@@ -66,7 +66,6 @@ const TicTacToe = (function() {
     boardSpaces.forEach((space, index) => space.addEventListener("click", () => {
         playerChoice = index;
         takeTurn(index);
-        console.log("Clicked space " + index);
     }))
     
     const getCurrPlayerName = () => currPlayer.name;
@@ -81,18 +80,21 @@ const TicTacToe = (function() {
         } else {
             currPlayer = playerTwo;
         }
-        currMarker.textContent = marker;
         marker = currPlayer.marker;
-        boardSpaces[index].textContent = marker;
 
         if (Gameboard.getBoardSpace(playerChoice) != "X" && Gameboard.getBoardSpace(playerChoice) != "O") {
             Gameboard.setBoardSpace(playerChoice, marker);
+            boardSpaces[index].textContent = marker;
+            if (marker == "X") {
+                currMarker.textContent = "O";
+            } else {
+                currMarker.textContent = "X";
+            }
             nextTurn();
         } else {
-            console.log("Taken");
+            alert("Taken");
         }
 
-        Gameboard.displayBoard();
 
         if (Gameboard.checkWinner() != "") {
             currPlayer.addScore();
