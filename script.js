@@ -65,7 +65,7 @@ const TicTacToe = (function() {
     let boardSpaces = document.querySelectorAll(".space");
     boardSpaces.forEach((space) => space.addEventListener("click", () => {
         playerChoice = space.textContent-1;
-        TicTacToe.takeTurn();
+        takeTurn();
         console.log("Clicked space " + space.textContent);
     }))
     
@@ -85,7 +85,6 @@ const TicTacToe = (function() {
 
         if (Gameboard.getBoardSpace(playerChoice) != "X" && Gameboard.getBoardSpace(playerChoice) != "O") {
             Gameboard.setBoardSpace(playerChoice, marker);
-            // Gameboard.board[playerChoice] = marker;
             nextTurn();
         } else {
             console.log("Taken");
@@ -104,5 +103,5 @@ const TicTacToe = (function() {
             resetTurns();
         }
     }
-    return {getCurrPlayerName, takeTurn}
+    return {getCurrPlayerName}
 })();
