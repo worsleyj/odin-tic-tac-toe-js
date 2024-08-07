@@ -27,3 +27,21 @@ p, h1, h2, h3, h4, h5, h6 {
 #root, #__next {
     isolation: isolate;
 }
+
+.game-container {
+    background-color: slategray;
+    width: 50%;
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+}
+
+.space {
+    height: 75px;
+    width: 75px;
+    background-color: orange;
+    margin: 12px;
+}
+
+.space:hover {
+    opacity: .7;
+}

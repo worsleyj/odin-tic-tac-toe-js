@@ -60,7 +60,8 @@ const TicTacToe = (function() {
             currPlayer = playerTwo;
         }
         marker = currPlayer.marker;
-        let playerChoice = prompt("Enter an index to place your marker. Current marker: " + marker);
+        // let playerChoice = prompt("Enter an index to place your marker. Current marker: " + marker);
+        let playerChoice = 0;
 
         if (Gameboard.board[playerChoice] != "X" && Gameboard.board[playerChoice] != "O") {
             Gameboard.board[playerChoice] = marker;
@@ -87,4 +88,4 @@ const TicTacToe = (function() {
     return {turnNumber, getCurrPlayerName, takeTurn}
 })();
 
-TicTacToe.takeTurn();
+// TicTacToe.takeTurn();
