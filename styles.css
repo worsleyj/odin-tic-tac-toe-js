@@ -55,13 +55,20 @@ h1 {
     place-items: center;
 }
 
-.info-container {
+.info-container, .button-container {
     width: 50%;
     background-color: #233142;
     display: grid;
     grid-template: 1fr / repeat(3, 1fr);
 }
 
+.reset-button {
+    grid-area: 2 / 2 / 3 / 3;
+    background-color: #f95959;
+    border-radius: 12px;
+    padding: 6px;
+    margin-bottom: 20px;
+}
 .card-container {
     padding: 25px;
     background-color: #233142;

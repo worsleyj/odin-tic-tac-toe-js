@@ -50,7 +50,8 @@ function createPlayer(name, marker) {
     let score = 0;
     const addScore = () => score++;
     const getScore = () => score;
-    return {name, marker, getScore, addScore}
+    const resetScore = () => score = 0;
+    return {name, marker, getScore, addScore, resetScore}
 }
 
 const playerOne = createPlayer("Player One", "X");
@@ -64,6 +65,15 @@ const TicTacToe = (function() {
     let currMarker = document.querySelector(".current-marker");
     let playerOneScore = document.querySelector(".player-one-score");
     let playerTwoScore = document.querySelector(".player-two-score");
+    let resetBtn = document.querySelector(".reset-button");
+    resetBtn.addEventListener("click", () => {
+        alert("Game has been reset");
+        playerOne.resetScore();
+        playerTwo.resetScore();
+        updateScores();
+        Gameboard.clearBoard();
+        resetGame();
+    })
     let boardSpaces = document.querySelectorAll(".space");
     boardSpaces.forEach((space, index) => space.addEventListener("click", () => {
         playerChoice = index;
