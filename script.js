@@ -52,7 +52,7 @@ const TicTacToe = (function() {
     let currPlayer = "";
     
     const getCurrPlayerName = () => currPlayer.name;
-    const nextTurn = () => turnNumber++; console.log(turnNumber);;
+    const nextTurn = () => turnNumber++;
     const takeTurn = () => {
         if (turnNumber % 2 != 0) {
             currPlayer = playerOne;
@@ -70,16 +70,19 @@ const TicTacToe = (function() {
         }
 
         Gameboard.displayBoard();
-        nextTurn();
-
-        while (Gameboard.checkWinner() == "" && turnNumber < 10) {
-            TicTacToe.takeTurn();
-        }
         if (Gameboard.checkWinner() != "") {
-            console.log(TicTacToe.getCurrPlayerName() + " is the winner!");
+            currPlayer.addScore();
+            console.log(Gameboard.checkWinner() + " is the winner!");
+            console.log(currPlayer.printScore());
+            console.log(turnNumber);
         } else if (turnNumber == 10) {
             console.log("Board is filled up! It's a draw!");
         }
+        while (Gameboard.checkWinner() == "" && turnNumber < 10) {
+            nextTurn();
+            TicTacToe.takeTurn();
+        }
+
     }
     return {turnNumber, getCurrPlayerName, takeTurn}
 })();
